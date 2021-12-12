@@ -1,0 +1,30 @@
+a {
+    text-decoration: none;
+    color: lightslategray;
+}
+
+p {
+    display: inline-block;
+    margin-right: 4%;
+}
+
+.signup_signin {
+    display: inline-block;
+}
+
+.title {
+    display: inline-block;
+    margin-right: 45%;
+}
+
+.navbar {
+    margin: 1% 5%;
+}
+
+.signup_signin {
+    background-color: #ec184d;
+    color: lightslategray;
+    border: none;
+    cursor: pointer;
+    margin-top: 2%;
+}
