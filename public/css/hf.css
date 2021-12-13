@@ -9,11 +9,7 @@ header {
 }
 
 .navbar {
-<<<<<<< HEAD
     padding:  3% 5% ;
-=======
-    padding:  3% 0 ;
->>>>>>> 0a6b1265c2871f0ceb525a8b3f3f2d9b9f13afab
 }
 
 .navbar-brand {
@@ -29,16 +25,6 @@ header {
     text-transform: uppercase;
 }
 
-.banner {
-    position: relative;
-    background: url('/images/bg.jpg');
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 250px 0px 200px;
-}
-
 .navbar-light .navbar-nav .nav-item .nav-link:hover,
 .navbar-light .navbar-nav .nav-item .active .nav-link {
     color: turquoise;
@@ -47,21 +33,6 @@ header {
 .navbar-light .navbar-nav .nav-item .nav-link {
     color: white;
     padding: 10px 20px;
-}
-
-.content{
-    text-align: center;
-    padding: 5% 0;
-}
-
-.card {
-    display: inline-block;
-    margin: 5% 3%;
-    text-align: center;
-}
-
-.card-header {
-    font-size: 2.5em;
 }
 
 footer {
@@ -74,5 +45,3 @@ footer {
     
 
 }
-
-

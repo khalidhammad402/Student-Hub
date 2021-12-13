@@ -28,9 +28,15 @@ app.post("/signin", function(req, res) {
     res.render("signin");
 });
 
+<<<<<<< HEAD
+app.get("/forum", function(req, res) {
+    res.render("forum")
+})
+=======
 // $(".login").on("click", function() {
 //     $("#signup_form").addClass("hidden");
 // });
+>>>>>>> 0a6b1265c2871f0ceb525a8b3f3f2d9b9f13afab
 
 app.listen(3000, function() {
     console.log("Server started on port 3000")
