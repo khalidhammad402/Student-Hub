@@ -32,6 +32,22 @@ app.get("/forum", function(req, res) {
     res.render("forum")
 })
 
+app.get("/helpdesk", function(req, res) {
+    res.render("helpdesk")
+})
+
+app.get("/aboutus", function(req, res) {
+    res.render("aboutus")
+})
+
+app.get("/resources", function(req, res) {
+    res.render("resources")
+})
+
+app.get("/internship", function(req, res) {
+    res.render("internship")
+})
+
 app.listen(3000, function() {
     console.log("Server started on port 3000")
 });
