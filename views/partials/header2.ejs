@@ -23,11 +23,16 @@
                   <a class="nav-link" href="/helpdesk">Helpdesk</a>
                 </li>
               </ul>
-              <a href="/signup">
-                <button type="button" class="btn btn-lg btn-success">Signup/ Login</button>
+              <% if (bool) { %>
+                <a href="/signin">
+                  <button type="button" class="btn btn-lg btn-success">Logout</button>
                 </a>
+              <% } else { %> 
+                <a href="/signup">
+                  <button type="button" class="btn btn-lg btn-success">Signup/ Login</button>
+                </a>
+              <% } %>
             </div>
         </nav>
     </div>
 </header>
-  

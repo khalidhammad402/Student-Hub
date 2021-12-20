@@ -6,8 +6,10 @@ var morgan = require("morgan");
 const { urlencoded } = require("body-parser");
 const User = require("./models/User");
 const ejs = require("ejs");
-
 const app = express();
+
+let isSignedIn = false;
+
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
@@ -21,38 +23,28 @@ app.use(session({
     cookie: {
         expires: 600000
     }
-}))
-app.use(function(req, res, next) {
-    if (req.session.user && req.session.StudentHub) {
-        res.redirect('/dashboard')
-    }
-    next()
-})
+}));
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
 
 app.use(function(req, res, next) {
     if (req.session.user && req.session.StudentHub) {
-        res.render("signin")
+        res.render("home", {bool:isSignedIn})
     }
     next()
 })
 
 var sessionChecker = function(req, res, next) {
     if (req.session.user && req.session.StudentHub) {
-        res.redirect('dashboard')
+        res.render("home")
     } else {
         next()
     }
 }
 
 app.get("/", sessionChecker, function(req, res) {
-    if (req.session.user && req.cookies.StudentHub) {
-        res.render("home");
-    } else {
-        res.redirect("signin");
-    }
+    res.render("home", {bool:isSignedIn});
 });
 
 app.get("/signup", sessionChecker, function(req, res) {
@@ -79,6 +71,7 @@ app.post("/signup", function(req, res) {
 });
 
 app.get("/signin", sessionChecker, function(req, res) {
+    isSignedIn = false;
     res.render("signin");
 });
 app.post("/signin", async function(req, res) {
@@ -96,29 +89,34 @@ app.post("/signin", async function(req, res) {
             }
         });
         req.session.user = user;
-        res.render("home")
+        isSignedIn = true;
+        res.render("home", {bool:isSignedIn})
     } catch(e) {
         console.log(e)
     }
 });
 
 app.get("/forum", sessionChecker, function(req, res) {
-    res.render("forum")
+    if(isSignedIn) {
+        res.render("forum", {bool: isSignedIn})
+    } else {
+        res.redirect("signin")
+    }
 })
 app.get("/helpdesk", function(req, res) {
-    res.render("helpdesk")
+    res.render("helpdesk", {bool: isSignedIn})
 })
 
 app.get("/aboutus", sessionChecker, function(req, res) {
-    res.render("aboutus")
+    res.render("aboutus", {bool: isSignedIn})
 })
 
 app.get("/resources", sessionChecker, function(req, res) {
-    res.render("resources")
+    res.render("resources", {bool: isSignedIn})
 })
 
 app.get("/internship", sessionChecker, function(req, res) {
-    res.render("internship")
+    res.render("internship", {bool: isSignedIn})
 })  
   
 const PORT = process.env.PORT || 3000;
