@@ -1,0 +1,17 @@
+<%- include("partials/header1"); -%>
+<link rel="stylesheet" href="/css/forum_add.css">
+<%- include("partials/header2"); -%>
+
+<div class="container">
+    <div class="popup">
+        <form action="/forum_add" method="POST">
+            <input type="text" placeholder="title" name="title"><br>
+            <input type="text" placeholder="topic" name="topic"><br>
+            <input type="text" placeholder="content" name="content"><br>
+            <input type="text" placeholder="author" name="author"><br>
+            <button type="submit" class="btn btn-lg btn-primary">Post</button>
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer"); -%>

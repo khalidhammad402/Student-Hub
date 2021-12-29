@@ -4,9 +4,12 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var morgan = require("morgan");
 const { urlencoded } = require("body-parser");
-const User = require("./models/User");
 const ejs = require("ejs");
 const app = express();
+
+const User = require("./models/User");
+const Forum = require("./models/Forum");
+const Resources = require("./models/Resources");
 
 let isSignedIn = false;
 
@@ -43,14 +46,16 @@ var sessionChecker = function(req, res, next) {
     }
 }
 
-app.get("/", sessionChecker, function(req, res) {
+app.route("/")
+.get(sessionChecker, function(req, res) {
     res.render("home", {bool:isSignedIn});
 });
 
-app.get("/signup", sessionChecker, function(req, res) {
+app.route("/signup")
+.get(sessionChecker, function(req, res) {
     res.render("signup");
-});
-app.post("/signup", function(req, res) {
+})
+.post(function(req, res) {
     let user = new User({
         username: req.body.username,
         email: req.body.email,
@@ -60,7 +65,7 @@ app.post("/signup", function(req, res) {
 
     user.save(function(err, docs) {
         if (err) {
-            res.redirect("/signup");
+            res.redirect("signup");
             console.log(err);
         } else {
             console.log(docs);
@@ -70,11 +75,12 @@ app.post("/signup", function(req, res) {
     })
 });
 
-app.get("/signin", sessionChecker, function(req, res) {
+app.route("/signin")
+.get(sessionChecker, function(req, res) {
     isSignedIn = false;
     res.render("signin");
-});
-app.post("/signin", async function(req, res) {
+})
+.post(async function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
@@ -96,14 +102,57 @@ app.post("/signin", async function(req, res) {
     }
 });
 
-app.get("/forum", sessionChecker, function(req, res) {
+app.route("/forum")
+.get(sessionChecker, function(req, res) {
     if(isSignedIn) {
-        res.render("forum", {bool: isSignedIn})
+        Forum.find(function(err, result){
+            if (!err){
+                res.render("forum", {bool: isSignedIn, result: result})
+            } else {
+                res.redirect("home")
+            }
+        });
     } else {
-        res.redirect("signin")
+        res.redirect("/signin")
+    }
+});
+
+app.route("/forum_add")
+.get(sessionChecker, function(req, res){
+    if (isSignedIn){
+        res.render("forum_add", {bool: isSignedIn})
+    } else {
+        res.redirect("/signin")
     }
 })
-app.get("/helpdesk", function(req, res) {
+.post(sessionChecker, function(req, res){
+    if (isSignedIn) {
+        let forum = new Forum({
+        title: req.body.title,
+        topic: req.body.topic,
+        content: req.body.content,
+        author: req.body.author
+    });
+    forum.save(function(err, done){
+        if (err) {
+            res.render("forum_add", {bool: isSignedIn});
+            console.log(err);
+        } else {
+            Forum.find(function(err, result){
+                if (!err){
+                    res.render("forum", {bool: isSignedIn, result: result})
+                } else {
+                    res.redirect("/home")
+                }
+            }); 
+        }
+    })
+    } else {
+        res.redirect("/signin", {bool: isSignedIn})
+    }
+})
+
+app.get("/helpdesk", sessionChecker, function(req, res) {
     res.render("helpdesk", {bool: isSignedIn})
 })
 
@@ -111,8 +160,21 @@ app.get("/aboutus", sessionChecker, function(req, res) {
     res.render("aboutus", {bool: isSignedIn})
 })
 
-app.get("/resources", sessionChecker, function(req, res) {
-    res.render("resources", {bool: isSignedIn})
+app.get("/resources", function(req, res) {
+    Resources.find(function(err, result){
+        if (!err){
+            res.render("resources", {bool: isSignedIn, result: result})
+        } else {
+            res.redirect("home")
+        }
+    });
+})
+app.get("/resources/write", sessionChecker, function(req, res){
+    if(isSignedIn){
+        res.render("resources_write", {bool: isSignedIn});
+    } else {
+        res.redirect("/signin")
+    }
 })
 
 app.get("/internship", sessionChecker, function(req, res) {
