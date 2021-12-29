@@ -24,8 +24,11 @@
                 </li>
               </ul>
               <% if (bool) { %>
+                <a href="/profile">
+                  <button type="button" class="btn btn-lg btn-success"><i class="fas fa-user-circle"></i></button>
+                </a>
                 <a href="/signin">
-                  <button type="button" class="btn btn-lg btn-success">Logout</button>
+                  <button type="button" class="btn-lg btn-warning">Logout</button>
                 </a>
               <% } else { %> 
                 <a href="/signup">

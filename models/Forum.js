@@ -6,10 +6,6 @@ mongoose.connect("mongodb://localhost:27017/studentHub", {
 });
 
 const forumSchema = mongoose.Schema({
-    id: {
-        type: Number,
-        required: true
-    },
     title: {
         type: String,
         required: true

@@ -24,7 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 600000
+        expires: 604800
     }
 }));
 app.use(express.static(__dirname + '/public'));
@@ -95,6 +95,7 @@ app.route("/signin")
             }
         });
         req.session.user = user;
+        console.log(user);
         isSignedIn = true;
         res.render("home", {bool:isSignedIn})
     } catch(e) {
@@ -107,6 +108,7 @@ app.route("/forum")
     if(isSignedIn) {
         Forum.find(function(err, result){
             if (!err){
+                console.log(result);
                 res.render("forum", {bool: isSignedIn, result: result})
             } else {
                 res.redirect("home")
@@ -131,7 +133,7 @@ app.route("/forum_add")
         title: req.body.title,
         topic: req.body.topic,
         content: req.body.content,
-        author: req.body.author
+        author: req.session.user.username
     });
     forum.save(function(err, done){
         if (err) {
@@ -140,9 +142,10 @@ app.route("/forum_add")
         } else {
             Forum.find(function(err, result){
                 if (!err){
+                    console.log(result);
                     res.render("forum", {bool: isSignedIn, result: result})
                 } else {
-                    res.redirect("/home")
+                    res.render("home")
                 }
             }); 
         }
@@ -152,12 +155,20 @@ app.route("/forum_add")
     }
 })
 
-app.get("/helpdesk", sessionChecker, function(req, res) {
-    res.render("helpdesk", {bool: isSignedIn})
-})
-
 app.get("/aboutus", sessionChecker, function(req, res) {
     res.render("aboutus", {bool: isSignedIn})
+})
+
+app.get("/profile", sessionChecker, function(req, res){
+    if(isSignedIn){
+        res.render("profile", {bool: isSignedIn, user: req.session.user})
+    } else {
+        res.redirect("/signin")
+    }
+})
+
+app.get("/helpdesk", sessionChecker, function(req, res) {
+    res.render("helpdesk", {bool: isSignedIn})
 })
 
 app.get("/resources", function(req, res) {
@@ -174,6 +185,30 @@ app.get("/resources/write", sessionChecker, function(req, res){
         res.render("resources_write", {bool: isSignedIn});
     } else {
         res.redirect("/signin")
+    }
+})
+app.post("/resources/write", sessionChecker, function(req, res){
+    if (isSignedIn) {
+        let resources = new Resources({
+        title: req.body.title,
+        content: req.body.content
+    });
+    resources.save(function(err, done){
+        if (err) {
+            res.render("resources_write", {bool: isSignedIn});
+            console.log(err);
+        } else {
+            Resources.find(function(err, result){
+                if (!err){
+                    res.render("resources", {bool: isSignedIn, result: result})
+                } else {
+                    res.render("home")
+                }
+            }); 
+        }
+    })
+    } else {
+        res.redirect("/signin", {bool: isSignedIn})
     }
 })
 
