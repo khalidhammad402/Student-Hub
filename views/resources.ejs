@@ -5,7 +5,7 @@
 <div class="container">
     <div class="col content">
       <%for(var i=result.length-1; i>=0; i--) { %>
-        <a href="/resources">
+        <a href="/resources/<%=result[i]._id%>">
           <div class="card text-white mb-3" style="max-width: 15rem;">
               <div class="card-header"><%= result[i].title %></div>
               <div class="card-body">
@@ -26,7 +26,7 @@
         <p class="search-guide"><em>Search articles, tags or names</em></p>
         <div class="popular-topics">
             <div>
-                <h5>Popular Topics</h5>
+                <h5>Popular Resources</h5>
             </div>
             <ul>
                 <a class="popular-list" href="">CP</a>

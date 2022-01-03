@@ -28,16 +28,19 @@
     <div class="col content">
         <% for (var i=result.length-1; i>=0; --i){ %>
             <div class="contents">
+                <a href="/forum/<%=result[i]._id%>">
                 <h3>
                     <%= result[i].title %>
                 </h3>
+                </a>
                 <p>
                     <%= result[i].content %>
                 </p>
-                <a href="">
+                <a href="/<%=result[i].author%>">
                     <%= result[i].author %>
                 </a>
             </div>
+        
         <% } %>
     </div>
     <div class="col search">

@@ -23,6 +23,16 @@ const forumSchema = mongoose.Schema({
 		type: String,
         required: true
 	},
+    reply: [
+        {
+            content: {
+                type: String
+            },
+            respondent: {
+                type: String
+            }
+        }
+    ]
 });
 
 const forumModel = mongoose.model("forum", forumSchema);

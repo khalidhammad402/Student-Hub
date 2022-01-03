@@ -10,6 +10,7 @@ const app = express();
 const User = require("./models/User");
 const Forum = require("./models/Forum");
 const Resources = require("./models/Resources");
+const Experience = require("./models/Experience");
 
 let isSignedIn = false;
 
@@ -40,7 +41,7 @@ app.use(function(req, res, next) {
 
 var sessionChecker = function(req, res, next) {
     if (req.session.user && req.session.StudentHub) {
-        res.render("home")
+        res.render("home", {bool:isSignedIn})
     } else {
         next()
     }
@@ -111,7 +112,7 @@ app.route("/forum")
                 console.log(result);
                 res.render("forum", {bool: isSignedIn, result: result})
             } else {
-                res.redirect("home")
+                res.redirect("home", {bool:isSignedIn})
             }
         });
     } else {
@@ -145,7 +146,7 @@ app.route("/forum_add")
                     console.log(result);
                     res.render("forum", {bool: isSignedIn, result: result})
                 } else {
-                    res.render("home")
+                    res.render("home", {bool:isSignedIn})
                 }
             }); 
         }
@@ -161,7 +162,19 @@ app.get("/aboutus", sessionChecker, function(req, res) {
 
 app.get("/profile", sessionChecker, function(req, res){
     if(isSignedIn){
-        res.render("profile", {bool: isSignedIn, user: req.session.user})
+        Resources.find({author: req.session.user.username}, function(err, result_res){
+            if (!err){
+                Experience.find({author: req.session.user.username}, function(err, result_exp){
+                    if(!err){
+                        res.render("profile", {bool: isSignedIn, user: req.session.user, result_res: result_res, result_exp: result_exp})
+                    } else {
+                        res.redirect("home", {bool:isSignedIn})
+                    }
+                })
+            } else {
+                res.redirect("home", {bool:isSignedIn})
+            }
+        });
     } else {
         res.redirect("/signin")
     }
@@ -176,7 +189,7 @@ app.get("/resources", function(req, res) {
         if (!err){
             res.render("resources", {bool: isSignedIn, result: result})
         } else {
-            res.redirect("home")
+            res.redirect("home", {bool:isSignedIn})
         }
     });
 })
@@ -191,9 +204,10 @@ app.post("/resources/write", sessionChecker, function(req, res){
     if (isSignedIn) {
         let resources = new Resources({
         title: req.body.title,
-        content: req.body.content
-    });
-    resources.save(function(err, done){
+        content: req.body.content,
+        author: req.session.user.username
+        });
+        resources.save(function(err, done){
         if (err) {
             res.render("resources_write", {bool: isSignedIn});
             console.log(err);
@@ -202,7 +216,7 @@ app.post("/resources/write", sessionChecker, function(req, res){
                 if (!err){
                     res.render("resources", {bool: isSignedIn, result: result})
                 } else {
-                    res.render("home")
+                    res.render("home", {bool:isSignedIn})
                 }
             }); 
         }
@@ -213,8 +227,91 @@ app.post("/resources/write", sessionChecker, function(req, res){
 })
 
 app.get("/internship", sessionChecker, function(req, res) {
-    res.render("internship", {bool: isSignedIn})
-})  
+    Experience.find(function(err, result){
+        if (!err){
+            res.render("internship", {bool: isSignedIn, result: result})
+        } else {
+            res.redirect("home", {bool:isSignedIn})
+        }
+    });
+})
+app.get("/internship/write", sessionChecker, function(req, res){
+    if(isSignedIn){
+        res.render("internship_write", {bool: isSignedIn});
+    } else {
+        res.redirect("/signin")
+    }
+})
+app.post("/internship/write", sessionChecker, function(req, res){
+    if (isSignedIn) {
+        let experience = new Experience({
+        title: req.body.title,
+        content: req.body.content,
+        author: req.session.user.username,
+        likes: 0
+    });
+    experience.save(function(err, done){
+        if (err) {
+            res.render("internship_write", {bool: isSignedIn});
+            console.log(err);
+        } else {
+            Experience.find(function(err, result){
+                if (!err){
+                    res.render("internship", {bool: isSignedIn, result: result})
+                } else {
+                    res.render("home", {bool:isSignedIn})
+                }
+            }); 
+        }
+    })
+    } else {
+        res.redirect("/signin", {bool: isSignedIn})
+    }
+})
+
+app.get("/forum/:id", function(req, res){
+    if(isSignedIn){
+        Forum.findOne({_id: req.params.id}, function(err, result){
+            if (!err){
+                res.render("forum_view", {bool: isSignedIn, result: result})
+            } else {
+                res.redirect("/forum")
+            }
+        });
+    } else {
+        res.redirect("/signin")
+    }
+})
+
+app.get("/resources/:id", function(req, res){       
+    Resources.findOne({_id: req.params.id}, function(err, result){
+        if (!err){
+            res.render("resources_view", {bool: isSignedIn, result: result})
+        } else {
+            res.redirect("/resources", {bool: isSignedIn, result: result})
+        }
+    });
+})
+
+app.get("/internship/:id", function(req, res){       
+    Experience.findOne({_id: req.params.id}, function(err, result){
+        if (!err){
+            res.render("internship_view", {bool: isSignedIn, result: result})
+        } else {
+            res.redirect("/internship")
+        }
+    });
+})
+
+app.get("/:user", function(req, res){       
+    User.findOne({username: req.params.user}, function(err, result){
+        if (!err){
+            res.render("general_profile", {bool: isSignedIn, result: result})
+        } else {
+            res.redirect("/home", {bool: isSignedIn})
+        }
+    });
+})
   
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {

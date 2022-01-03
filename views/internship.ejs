@@ -1,5 +1,5 @@
 <%- include("partials/header1"); -%>
-      <link rel="stylesheet" href="/css/internship.css">
+<link rel="stylesheet" href="/css/internship.css">
     </head>
     <body>
      <!----header-->
@@ -26,9 +26,18 @@
                   <a class="nav-link" href="/helpdesk">Helpdesk</a>
                 </li>
               </ul>
-              <a href="/signup">
-                <button type="button" class="btn btn-lg btn-success">Signup/ Login</button>
+              <% if (bool) { %>
+                <a href="/profile">
+                  <button type="button" class="btn btn-lg btn-success"><i class="fas fa-user-circle"></i></button>
                 </a>
+                <a href="/signin">
+                  <button type="button" class="btn-lg btn-warning">Logout</button>
+                </a>
+              <% } else { %> 
+                <a href="/signup">
+                  <button type="button" class="btn btn-lg btn-success">Signup/ Login</button>
+                </a>
+              <% } %>
             </div>
         </nav>
          
@@ -41,10 +50,8 @@
                 <form>
                     <input type = "text" class ="search-input"
                       placeholder = "find your way....">
-                    <button type ="submit" class = "search-btn">
-                     <i class = "fs fa-search"></i>
-                 </button>
-                 </form>
+                    <button type ="submit" class = "search-btn"><i class = "fas fa-search"></i></button>
+                </form>
              </div>
          </div>
          </header>
@@ -52,130 +59,33 @@
          
          <section class = "blog" id="blog">
              
-             <div class ="container">
-                 <div class ="title">
-                     <centre>
-                     <h1>
-                         Latest blogs
-                     </h1>
-                     <p> recent blogs about interview experiences.
-
-                     </p>
-                     </centre>
-
-                 </div>
-                 <div class = "blog-content">
-                     <div class = "blog-item">
-                         <img src ="/images/internship_bg.jpg" alt ="" width="50" height="200">
-                         <span><i class ="fart fa-heart"></i>22</span>
-                         <span>Likes</span>
-                        
-
-                     
-                     <div class ="blog-text">
-                         <span> 20 january, 2021</span>
-                          <h2>lorem jjhkjk kjkjkj jkjsksss hdnlaknd tab</h2>
-                          <p>Lorem ipsum dolor sit amet consectetur 
-                              adipisicing elit. 
-                              Nesciunt, obcaecati assumenda fugit accusamus aperiam ipsam?</p>
-                          
-                           
-                              <a href ="#"> Read more</a>
-                              </div>
-                            </div>
-
-                        
-                       
-                    
+            <div class ="container">
+                <div class ="title">
+                    <centre>
+                        <h1>
+                            Latest blogs
+                        </h1>
+                        <p> recent blogs about interview experiences.</p>
+                    </centre>
+                </div>
+                <a href="/internship/write"><button class= "write"> Add you own Interview Experience</button></a>
+                <div class = "blog-content">
+                    <%for(var i=result.length-1; i>=0; i--) { %>
+                        <a href="/internship/<%=result[i]._id%>">
                             <div class = "blog-item">
                                 <img src ="/images/internship_bg.jpg" alt ="" width="50" height="200">
-                                <span><i class ="fart fa-heart"></i>22</span>
+                                <span><i class ="fas fa-heart"></i><%=result[i].likes%></span>
                                 <span>Likes</span>
-                            
-       
-                            
-                            <div class ="blog-text">
-                                <span> 20 january, 2021</span>
-                                 <h2>lorem jjhkjk kjkjkj jkjsksss hdnlaknd tab</h2>
-                                 <p>Lorem ipsum dolor sit amet consectetur 
-                                     adipisicing elit. 
-                                     Nesciunt, obcaecati assumenda fugit accusamus aperiam ipsam?</p>
-                                 
-                                  
-                                     <a href ="#"> Read more</a>
-                                     </div>
-                                    </div>
-                             
-                               
-
-                               
-                                <div class = "blog-item">
-                                    <img src ="/images/internship_bg.jpg" alt ="" width="50" height="200">
-                                    <span><i class ="fart fa-heart"></i>22</span>
-                                    <span>Likes</span>
-                                
-           
-                                
                                 <div class ="blog-text">
                                     <span> 20 january, 2021</span>
-                                     <h2>lorem jjhkjk kjkjkj jkjsksss hdnlaknd tab</h2>
-                                     <p>Lorem ipsum dolor sit amet consectetur 
-                                         adipisicing elit. 
-                                         Nesciunt, obcaecati assumenda fugit accusamus aperiam ipsam?</p>
-                                     
-                                      
-                                         <a href ="#"> Read more</a>
-                                         </div>
-                                        </div>
-                                         
-           
-                                   
-                                   
-                                    <div class = "blog-item">
-                                        <img src ="/images/internship_bg.jpg" alt ="" width="50" height="200">
-                                        <span><i class ="fart fa-heart"></i>22</span>
-                                        <span>Likes</span>
-                                    
-               
-                                    
-                                    <div class ="blog-text">
-                                        <span> 20 january, 2021</span>
-                                         <h2>lorem jjhkjk kjkjkj jkjsksss hdnlaknd tab</h2>
-                                         <p>Lorem ipsum dolor sit amet consectetur 
-                                             adipisicing elit. 
-                                             Nesciunt, obcaecati assumenda fugit accusamus aperiam ipsam?</p>
-                                         
-                                          
-                                             <a href ="#"> Read more</a>
-                                             </div>
-                                     
-                                            </div>
-                                       
-                                        <div class = "blog-item">
-                                            <img src ="/images/internship_bg.jpg" alt ="" width="50" height="200">
-                                            <span><i class ="fart fa-heart"></i>22</span>
-                                            <span>Likes</span>
-                                        
-                   
-                                        
-                                        <div class ="blog-text">
-                                            <span> 20 january, 2021</span>
-                                             <h2>lorem jjhkjk kjkjkj jkjsksss hdnlaknd tab</h2>
-                                             <p>Lorem ipsum dolor sit amet consectetur 
-                                                 adipisicing elit. 
-                                                 Nesciunt, obcaecati assumenda fugit accusamus aperiam ipsam?</p>
-                                             
-                                              
-                                                 <a href ="#"> Read more</a>
-                                                 </div>
-                                                </div>     
-                                            </div>
-             </div>
-                 </div>
-
-             </div>
-             <button class= "write"> Add you own Interview Experience</button>
-             
+                                    <h2><%=result[i].title%></h2>
+                                    <p><%=result[i].content%></p>
+                                </div>
+                            </div>
+                        </a>
+                    <%  } %>   
+                </div>
+            </div>
          </section>
 
          </center>

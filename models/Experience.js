@@ -5,7 +5,7 @@ mongoose.connect("mongodb://localhost:27017/studentHub", {
     useUnifiedTopology: true
 });
 
-const resourcesSchema = mongoose.Schema({
+const experienceSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -19,12 +19,12 @@ const resourcesSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    views: {
+    likes: {
         type: Number,
         required: true
     }
 });
 
-const resourcesModel = mongoose.model("resources", resourcesSchema);
+const experienceModel = mongoose.model("experience", experienceSchema);
 
-module.exports = resourcesModel
+module.exports = experienceModel
