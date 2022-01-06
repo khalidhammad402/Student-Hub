@@ -74,6 +74,8 @@ footer {
     position: fixed;
     left: 2%;
     width: 20%;
+    height: 40%;
+    overflow: auto;
     float: left;
     padding: 0;
     box-shadow: 0 10px 50px #888888;
@@ -120,7 +122,6 @@ footer {
     padding: 5% 5%;
     color: #212529;
     font-weight: 500;
-    text-transform: uppercase;
 }
 
 .topic:hover {

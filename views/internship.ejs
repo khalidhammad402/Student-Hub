@@ -1,7 +1,29 @@
 <%- include("partials/header1"); -%>
 <link rel="stylesheet" href="/css/internship.css">
-    </head>
-    <body>
+<script type="text/javascript">
+  $(function(){				
+      $('#select_link').click(function(e){
+          e.preventDefault();
+          console.log('select_link clicked');
+
+          var data = {};
+          data.title = "title";
+          data.message = "message";
+          $.ajax({
+            type: 'GET',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            url: '/internship',						
+            success: function(data) {
+              console.log('success');
+              console.log(JSON.stringify(data));
+            }
+          });
+      });				
+  });
+</script>
+</head>
+<body>
      <!----header-->
      <br>
      <header>
@@ -49,14 +71,14 @@
                      <p>everything you want to know about job interviews</p>
                 <form>
                     <input type = "text" class ="search-input"
-                      placeholder = "find your way....">
+                      placeholder = "find your way...." onkeyup="showResults(this.value)">
+                    <div id="liveSearch"></div>
                     <button type ="submit" class = "search-btn"><i class = "fas fa-search"></i></button>
                 </form>
              </div>
          </div>
          </header>
          <center>
-         
          <section class = "blog" id="blog">
              
             <div class ="container">
@@ -68,29 +90,22 @@
                         <p> recent blogs about interview experiences.</p>
                     </centre>
                 </div>
-                <a href="/internship/write"><button class= "write"> Add you own Interview Experience</button></a>
+                <a href="/internship/write"><button type="button" class="btn btn-info write">Add your own Interview experience</button></a>
                 <div class = "blog-content">
                     <%for(var i=result.length-1; i>=0; i--) { %>
-                        <a href="/internship/<%=result[i]._id%>">
-                            <div class = "blog-item">
-                                <img src ="/images/internship_bg.jpg" alt ="" width="50" height="200">
-                                <span><i class ="fas fa-heart"></i><%=result[i].likes%></span>
-                                <span>Likes</span>
-                                <div class ="blog-text">
-                                    <span> 20 january, 2021</span>
-                                    <h2><%=result[i].title%></h2>
-                                    <p><%=result[i].content%></p>
-                                </div>
-                            </div>
-                        </a>
+                        <div class="card" style="width: 18rem;">
+                          <img class="card-img-top" src="/images/internship_bg.jpg" alt="Card image cap">
+                          <div class="card-body">
+                            <h6> <%=result[i].date%> </h6>
+                            <h5 class="card-title"><%=result[i].company%></h5>
+                            <p class="card-text"><%=result[i].author%></p>
+                            <a href="/internship/<%=result[i]._id%>" class="btn btn-primary">Read</a>
+                          </div>
+                        </div>
                     <%  } %>   
                 </div>
             </div>
-         </section>
-
-         </center>
-
-
-
+        </section>
+        </center>
     </body>
 </html>

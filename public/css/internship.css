@@ -103,14 +103,16 @@ footer {
        
        
    }
+
+   .hide{
+       display: none;
+   }
+
+   .card{
+       display: inline-block;
+       margin: 3%;
+   }
     
-   
-   
-   
-   
-   
-   
-   
    .banner{
        flex: 1;
        display: flex;

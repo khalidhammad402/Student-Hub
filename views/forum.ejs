@@ -7,20 +7,60 @@
         <div class="heading">
             <h3>Topics</h3>
         </div>
-        <ul>
-            <a href="">
+        <ul class="list-group">
+            <a href="/forum/topics/Web-Development">
                 <div class="topic">
-                    <li>Web Development</li>
+                    <li class="list-group-item">Web-Development</li>
                 </div>
             </a>
-            <a href="">
+            <a href="/forum/topics/App-Development">
                 <div class="topic">
-                    <li>App Development</li>
+                    <li class="list-group-item">App-Development</li>
                 </div>
             </a>
-            <a href="">
+            <a href="/forum/topics/Programming">
                 <div class="topic">
-                    <li>Software Development</li>
+                    <li class="list-group-item">Programming</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Machine-Learning">
+                <div class="topic">
+                    <li class="list-group-item">Machine-Learning</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Artificial-Intelligence">
+                <div class="topic">
+                    <li class="list-group-item">Artificial-Intelligence</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Robotics">
+                <div class="topic">
+                    <li class="list-group-item">Robotics</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Engineering">
+                <div class="topic">
+                    <li class="list-group-item">Engineering</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Finance">
+                <div class="topic">
+                    <li class="list-group-item">Finance</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Photography">
+                <div class="topic">
+                    <li class="list-group-item">Photography</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Art">
+                <div class="topic">
+                    <li class="list-group-item">Art</li>
+                </div>
+            </a>
+            <a href="/forum/topics/Graphic-Design">
+                <div class="topic">
+                    <li class="list-group-item">Graphic-Design</li>
                 </div>
             </a>
         </ul>
@@ -33,10 +73,13 @@
                     <%= result[i].title %>
                 </h3>
                 </a>
+                <h6>
+                    <%= result[i].topic %>
+                </h6>
                 <p>
                     <%= result[i].content %>
                 </p>
-                <a href="/<%=result[i].author%>">
+                <a href="/user/<%=result[i].author%>">
                     <%= result[i].author %>
                 </a>
             </div>
@@ -50,7 +93,7 @@
             <button type="button" class="btn btn-outline-primary">search</button>
             <div id="searchResults"></div>
         </div>
-        <a href="/forum_add">
+        <a href="/forum/add">
             <div class="add-button">
                 <button type="button" class="btn btn-lg btn-primary">Add</button>
             </div>

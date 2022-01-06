@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema({
         unique: true,
         required: true
     },
+    isVerified: { type: Boolean, default: false },
     email: {
         type: String,
         unique: true,
@@ -21,9 +22,24 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    designation: {
+        type: String
+    },
 	institute: {
 		type: String
-	}
+	},
+    portfolio: {
+        type: String
+    },
+    resources: [{
+        id: {
+            type: String,
+            unique: true
+        },
+        title: {
+            type: String
+        }
+    }]
 });
 
 userSchema.pre("save", function(next) {

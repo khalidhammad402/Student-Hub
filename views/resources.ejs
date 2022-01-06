@@ -4,12 +4,30 @@
 
 <div class="container">
     <div class="col content">
-      <%for(var i=result.length-1; i>=0; i--) { %>
-        <a href="/resources/<%=result[i]._id%>">
-          <div class="card text-white mb-3" style="max-width: 15rem;">
-              <div class="card-header"><%= result[i].title %></div>
+      <%for(var i=result_res.length-1; i>=0; i--) { %>
+        <a href="/resources/<%=result_res[i]._id%>">
+          <div class="card text-white mb-3" style="width: 15rem; height: 12rem;">
+              <div class="card-header"><%= result_res[i].title %></div>
+              <% if(bool){ %>
+                <% var flag = false %>
+                <% for(var j=res_user.resources.length-1; j>=0; j--){ %>
+                  <% if(res_user.resources[j].id == result_res[i]._id){ %>
+                    <% flag = true %>
+                  <% } %>
+                <% } %>
+                <% if(flag){ %>
+                  <input id="<%=result_res[i]._id%>" class="card-header" type="checkbox" data-toggle="toggle" onchange="bookmark(this)" checked>
+                <% } else {%>
+                  <input id="<%=result_res[i]._id%>" class="card-header" type="checkbox" data-toggle="toggle" onchange="bookmark(this)">
+                  <% } %>
+                <% } %>
               <div class="card-body">
-                <p class="card-text"><%= result[i].content %></p>
+                <p class="card-text" style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 30ch;"><%= result_res[i].content %></p>
+                <p class="card-text"> <%=result_res[i].date%> </p>
               </div>
             </div>
         </a>
@@ -29,14 +47,12 @@
                 <h5>Popular Resources</h5>
             </div>
             <ul>
-                <a class="popular-list" href="">CP</a>
-                <a class="popular-list" href="">ML</a>
-                <a class="popular-list" href="">Robotics</a>
+              <%for(var i=0; i<result.length; i++) { %>
+                <a class="popular-list" href="/resources/<%=result_res[i]._id%>"><%=result[i].title%></a>
+              <% } %>
             </ul>
         </div>
         <div class="article-options">
-            <a class="article-option" href="">My Article</a>
-            <a class="article-option" href="">Bookmarked Articles</a>
             <a href="/resources/write">
               <div class="add-button">
                 <button type="button" class="btn btn-lg btn-primary">Write</button>
@@ -45,3 +61,48 @@
         </div>
     </div>
 </div>
+<script>
+  function bookmark(val){
+    let clicked_id = val.id;
+    let status = $('#' + clicked_id).is(":checked");
+    var str_data = '<%-JSON.stringify(result_res)%>'
+    var parsed_data = JSON.parse(str_data)
+    var title = ""
+    for (var i=parsed_data.length-1; i>=0; i--) {
+        if(parsed_data[i]._id == clicked_id){
+          title = parsed_data[i].title
+        }
+     }
+      if(status == true){
+        $.ajax({
+        url: "http://localhost:3000/resources",
+        type: "POST",
+        dataType: "json",
+        data: {
+          clicked_id: clicked_id,
+          status: status,
+          title: title
+        },
+        success: function(d, s) {
+          console.log(d)
+        }
+        });
+      } else {
+        $.ajax({
+        url: "http://localhost:3000/resources",
+        type: "POST",
+        dataType: "json",
+        data: {
+          clicked_id: clicked_id,
+          status: status,
+          title: title
+        },
+        success: function(d, s) {
+          console.log(d)
+        }
+        });
+      } 
+    }
+</script>
+</body>
+</html>

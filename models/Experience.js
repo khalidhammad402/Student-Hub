@@ -6,7 +6,7 @@ mongoose.connect("mongodb://localhost:27017/studentHub", {
 });
 
 const experienceSchema = mongoose.Schema({
-    title: {
+    company: {
         type: String,
         required: true
     },
@@ -19,8 +19,8 @@ const experienceSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    likes: {
-        type: Number,
+    date: {
+        type: String,
         required: true
     }
 });
