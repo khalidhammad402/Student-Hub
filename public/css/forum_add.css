@@ -55,3 +55,85 @@ footer {
 @media (max-width:992px){
 
 }
+
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Poppins' ;
+}
+
+body{
+    
+    height: 130vh;
+    
+    
+    background: linear-gradient(135deg, #71b7e6, #9b59b6) no-repeat;
+
+
+}
+.container{
+    margin-top: 8%;
+    margin-bottom: 5%;
+    height: 70%;
+    width: 50%;
+    background: #fff;
+    padding-bottom: 3px;
+    border-radius: 5px;
+}
+.title{
+    
+    font-weight: 500;
+    font-size: 50%;
+
+    position: relative;
+    
+}
+.input-box input{
+    height: 45px;
+    width: 50%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+     font-size: 16px;
+     text-align: justify;
+     border-bottom-width: 2px ;
+     border-color: #9b59b6;
+     
+     
+}
+.input-box .select1 select{
+    height: 45px;
+    width: 50%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+     font-size: 16px;
+     
+     border-bottom-width: 2px ;
+     border-color: #9b59b6;
+
+}
+
+
+
+.details{
+    font-size: 20px;
+}
+
+
+
+button{
+    height: 100%;
+    width: 30%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}

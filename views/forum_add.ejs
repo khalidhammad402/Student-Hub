@@ -3,28 +3,57 @@
 <%- include("partials/header2"); -%>
 
 <div class="container">
+  
     <div class="popup">
-        <form action="/forum/add" method="POST">
-            <input type="text" placeholder="title" name="title" required><br>
-            <label for="topic">Topic: </label>
-            <select name="topic" required>
-                <option value="" disabled>Select</option>
-                <option value="Web-Development">Web-Development</option>
-                <option value="App-Development ">App-Development</option>
-                <option value="Machine-Learning">Machine-Learning</option>
-                <option value="Artificial-Intelligence">Artificial-Intelligence</option>
-                <option value="Robotics">Robotics</option>
-                <option value="Programming">Programming</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Finance">Finance</option>
-                <option value="Graphic-Design">Graphic-Design</option>
-                <option value="Art">Art</option>
-                <option value="Photography">Photography</option>
-            </select><br>
-            <input type="text" placeholder="content" name="content" required><br>
+        <form action="/forum_add" method="POST">
+          
+          <div class= "title"><h1>Write Your Queries</h1></div>
+            
+            <div class="input-box">
+            
+            <span class="details">Title</span>
+            <br>
+            <input type="text" placeholder="title" required name="title">
+            <br><br>
+            <div class= select1>
+            <span class="details">Topic</span> 
+             <br>
+             
+             <select name="topic" required>
+                 <option value="" disabled>Select</option>
+                 <option value="Web-Development">Web-Development</option>
+                 <option value="App-Development ">App-Development</option>
+                 <option value="Machine-Learning">Machine-Learning</option>
+                 <option value="Artificial-Intelligence">Artificial-Intelligence</option>
+                 <option value="Robotics">Robotics</option>
+                 <option value="Programming">Programming</option>
+                 <option value="Engineering">Engineering</option>
+                 <option value="Finance">Finance</option>
+                 <option value="Graphic-Design">Graphic-Design</option>
+                 <option value="Art">Art</option>
+                 <option value="Photography">Photography</option>
+             </select><br>
+  
+            
+            <br>
+            </div>
+  
+            
+            <span class="details">Content</span>
+            <br>
+            <input type="text" placeholder="content" name="content">
+            <br><br>
+            
+            <span class="details">Author</span>
+            <br>
+            <input type="text" placeholder="author" name="author">
+            <br><br>
+  
+          
             <button type="submit" class="btn btn-lg btn-primary">Post</button>
+            </div>
         </form>
     </div>
-</div>
+    </div>
 
 <%- include("partials/footer"); -%>
