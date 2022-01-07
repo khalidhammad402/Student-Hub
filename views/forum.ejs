@@ -89,10 +89,10 @@
     <div class="col search">
         <div class="input-group">
             <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-            aria-describedby="search-addon"/>
+            aria-describedby="search-addon" onkeyup="showResults(this.value)"/>
             <button type="button" class="btn btn-outline-primary">search</button>
-            <div id="searchResults"></div>
         </div>
+        <div id="livesearch" class="hide"></div>
         <a href="/forum/add">
             <div class="add-button">
                 <button type="button" class="btn btn-lg btn-primary">Add</button>
@@ -100,6 +100,28 @@
         </a>
     </div>
 </div>
+<script>
+      function showResults(str){
+        if(str.length === 0){
+          $("#livesearch").addClass("hide")
+        } else {
+          $("#livesearch").removeClass("hide")
+        }
+        $.ajax({
+          url: "http://localhost:3000/forum",
+          type: "POST",
+          dataType: "json",
+          data: {
+            query: str
+          },
+          success: function(result){
+            $("#livesearch").html(result.response)
+          }
+          });
+      }
+  </script>
+</body>
+</html>
 
 
 

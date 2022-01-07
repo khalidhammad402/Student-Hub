@@ -7,14 +7,32 @@
         <h3>
             <%= result.title %>
         </h3>
-        </a>
         <p>
             <%= result.content %>
         </p>
-        <a href="/<%=result.author%>">
+        <a href="/user/<%=result.author%>">
             <%= result.author %>
         </a>
-    </div>
+    </div><br>
+    <% for(var i=0; i<result.reply.length; i++) { %>
+    <div class="contents">
+        <h3>
+            <a href="/user/<%=result.reply[i].respondent%>">
+                <%= result.reply[i].respondent %>
+            </a>
+        </h3>
+        <p>
+            <%= result.reply[i].content %>
+        </p>
+    </div><br>
+    <% } %>
+    <form class="reply-form" action="/forum/<%=result._id%>" method="post">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1"><h4>Comment</h4></label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here..." name="reply" required></textarea>
+          </div><br>
+        <button type="submit" class="btn btn-primary">Reply</button>
+    </form>
 </div>
 
 <%- include("partials/footer"); -%>

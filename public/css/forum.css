@@ -131,3 +131,11 @@ footer {
 .add-button > .btn {
     width: 80%;
 }
+
+.hide{
+    display: none;
+}
+
+#livesearch {
+    background-color: blanchedalmond;
+}

@@ -12,11 +12,14 @@ const userSchema = mongoose.Schema({
         unique: true,
         required: true
     },
-    isVerified: { type: Boolean, default: false },
     email: {
         type: String,
         unique: true,
         required: true
+    },
+    verified: {
+        type: Boolean,
+        default: false
     },
     password: {
         type: String,
@@ -34,12 +37,16 @@ const userSchema = mongoose.Schema({
     resources: [{
         id: {
             type: String,
-            unique: true
         },
         title: {
             type: String
         }
-    }]
+    }],
+    img:
+    {
+        type: String,
+        default: 'blank.png'
+    }
 });
 
 userSchema.pre("save", function(next) {

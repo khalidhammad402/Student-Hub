@@ -3,7 +3,9 @@
 <%- include("partials/header2"); -%>
 
 <div class="container">
-    <form action="/profile/edit" method="post">
+    <form action="/profile/edit" method="post" enctype="multipart/form-data">
+        <label for="image">Upload Image</label><br>
+        <input type="file" name="image" id="image" class="form-control-file"/><br>
         <label for="designation">Your Designation</label><br>
         <input type="text" name="designation" required><br>
         <label for="institute">Institute</label><br>

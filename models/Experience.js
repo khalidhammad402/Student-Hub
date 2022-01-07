@@ -10,6 +10,10 @@ const experienceSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    title: {
+        type: String,
+        required: true
+    },
     content: {
         type: String,
         unique: true,
@@ -22,6 +26,9 @@ const experienceSchema = mongoose.Schema({
     date: {
         type: String,
         required: true
+    },
+    img : {
+        type: String
     }
 });
 

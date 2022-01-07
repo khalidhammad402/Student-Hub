@@ -310,3 +310,11 @@ footer {
            
    
    }
+
+.hide{
+    display: none;
+}
+
+#livesearch {
+    background-color: blanchedalmond;
+}
