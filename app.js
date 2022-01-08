@@ -343,9 +343,9 @@ app.get("/resources", function(req, res) {
             Resources.find(function(err, result){
                 if (!err){
                     if(isSignedIn){
-                        User.findOne({username: req.session.user.username}, async function(err, res_user){
+                        User.findOne({username: req.session.user.username}, function(err, res_user){
                             if(!err){
-                                await res.render("resources", {bool: isSignedIn, result_res: result_res, result: result, res_user: res_user})
+                                res.render("resources", {bool: isSignedIn, result_res: result_res, result: result, res_user: res_user})
                             } else {
                                 res.redirect("home", {bool:isSignedIn})
                             }
@@ -467,9 +467,9 @@ app.post("/resources/write", sessionChecker, function(req, res){
 })
 
 app.get("/internship", sessionChecker, function(req, res) {
-    Experience.find( async function(err, result){
+    Experience.find(function(err, result){
         if (!err){
-             await res.render("internship", {bool: isSignedIn, result: result})
+            res.render("internship", {bool: isSignedIn, result: result})
         } else {
             res.redirect("home", {bool:isSignedIn})
         }
