@@ -43,15 +43,124 @@ ul {
 footer {
     text-align: center;
     padding: 2% 8%;
-    background-color: turquoise;
+    background-color: turquoise
+}
+
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+body {
+  
+  height: 150vh;
+  align-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e1e99b, #70e9a6) no-repeat;
 }
 
 .container{
-    margin-top: 12% ;
-    margin-bottom: 2%;
-    text-align: center;
+    max-width: 700px;
+    width: 70%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-bottom: 5%;
+    align-content: center;
+    align-items: center;
+}
+.container .title{
+    font-size: 60px;
+    font-weight: 500;
+    position:relative;
+
+}
+.container .title::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 40px;
+    background: linear-gradient( #e1e99b, #70e9a6);
 }
 
-@media (max-width:992px){
 
+form .user-details .input-box{
+    margin-bottom: 5px;
+    width: calc(100% / 2 - 20px);
 }
+
+
+ .user-details .input-box .details{
+     display: block;
+     font-size: 40px;
+     font-weight: 500;
+     margin-bottom: 2px;
+ }
+ 
+ .user-details .input-box input{
+     height: 55px;
+     width: 300px;
+     outline: none;
+     border-radius: 5px;
+     border: 1px solid #ccc;
+     font-size: 20px;
+     border-bottom-width: 2px;
+     transition: all 0.3s ease;
+
+
+ }
+
+ .user-details .input-box input:focus,
+ .user-details .input-box input:valid{
+    border-color:#a1e99b;
+ }
+
+  button {
+     height: 60px;
+     width: 100%;
+     outline: none;
+     color: #0f0f0f;
+     border: none;
+     font-size: 18px;
+     font-weight:500;
+     border-radius: 5px;
+     letter-spacing: 1px;
+     background: linear-gradient(135deg, #e1e99b, #70e9a6);
+     }
+
+  button:hover{
+    background: linear-gradient(-135deg, #e1e99b, #70e9a6);
+  }
+
+
+
+
+
+ @media(max-width: 992px){
+    body {
+  
+        height: 100%;}
+    .container{
+        max-width: 100%;}
+
+        form .user-details .input-box{
+            margin-bottom: 15px;
+            width: 100%;
+        }
+       
+    
+ }
+
+
+
+

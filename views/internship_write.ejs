@@ -3,12 +3,24 @@
 <%- include("partials/header2"); -%>
 
 <div class="container">
+    <div class="title">Write Your Own Experience</div>
+    <br><br>
     <form action="/internship/write" method="post">
-        <input type="text" name="title" placeholder="title" required><br>
-        <input type="text" name="company" placeholder="company" required><br>
-        <input type="text" name="content" placeholder="Write here.." required><br>
+      <div class="user-details">
+        <div class="input-box">
+          <span class="details"> Company</span>
+          <input type="text" name="company" placeholder="company" required><br>
+        </div>
+        <br> <br>
+        <div class="input-box">
+          <span class="details"> Content</span>
+          <input type="text" name="content" placeholder="Write here.." required><br>
+        </div>
+        <br> <br>
         <button type="submit">Submit</button>
-    </form>
+        </div>
+      </form>
 </div>
+
 
 <%- include("partials/footer"); -%>
