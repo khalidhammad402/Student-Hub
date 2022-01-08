@@ -54,3 +54,18 @@ footer {
     font-weight: 600;
     margin-top: 2%;
 }
+
+.content{
+    padding: 3% 10%;
+    background-color: gainsboro;
+}
+
+.card{
+    display: inline-block;
+    text-align: center;
+}
+
+.team{
+    display: flex;
+    justify-content: space-between;
+}

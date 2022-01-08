@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/studentHub", {
+mongoose.connect("mongodb+srv://allstudentsHub:allstudentsHub@cluster0.14bcs.mongodb.net/studentHub", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
