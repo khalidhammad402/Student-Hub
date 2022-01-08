@@ -640,7 +640,11 @@ app.get("/user/:user", function(req, res){
     });
 })
   
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, function () {
-    console.log('Server is started on http://127.0.0.1:'+PORT);
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
+app.listen(port, function () {
+    console.log('Server is started '+port);
 });

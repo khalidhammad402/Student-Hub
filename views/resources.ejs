@@ -95,7 +95,7 @@
         });
       } else {
         $.ajax({
-        url: "http://localhost:3000/resources",
+        url: "/resources",
         type: "POST",
         dataType: "json",
         data: {
@@ -116,7 +116,7 @@
         $("#livesearch").removeClass("hide")
       }
       $.ajax({
-        url: "http://localhost:3000/resources/search",
+        url: "/resources/search",
         type: "POST",
         dataType: "json",
         data: {
