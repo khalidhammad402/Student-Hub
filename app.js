@@ -62,7 +62,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 604800
+        expires: 60480000
     }
 }));
 app.use(express.static(__dirname + '/public'));
@@ -210,7 +210,7 @@ app.post("/forum", sessionChecker, function(req, res){
                         if(hint === ""){
                             hint = "<a href='/forum/"+ result._id +"'>"+ result.title +"</a>"
                         } else {
-                            hint = hint + "<br><a href='/forum/"+ result._id +"'>"+ result.title +"</a>"
+                            hint = hint + "<hr><br><a href='/forum/"+ result._id +"'>"+ result.title +"</a>"
                         }
                     }
                 })
@@ -622,6 +622,7 @@ app.get("/resources/:id", function(req, res){
 app.get("/internship/:id", function(req, res){       
     Experience.findOne({_id: req.params.id}, function(err, result){
         if (!err){
+            console.log(result)
             res.render("internship_view", {bool: isSignedIn, result: result})
         } else {
             res.redirect("/internship")

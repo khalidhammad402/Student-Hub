@@ -6,7 +6,7 @@
     <div class="col content">
       <%for(var i=result_res.length-1; i>=0; i--) { %>
         <a href="/resources/<%=result_res[i]._id%>">
-          <div class="card text-white mb-3" style="width: 15rem; height: 12rem;">
+          <div class="card text-white mb-3" style="width: 15rem; height: 13rem;">
               <div class="card-header"><%= result_res[i].title %></div>
               <% if(bool){ %>
                 <% var flag = false %>
@@ -16,9 +16,12 @@
                   <% } %>
                 <% } %>
                 <% if(flag){ %>
-                  <input id="<%=result_res[i]._id%>" class="card-header" type="checkbox" data-toggle="toggle" onchange="bookmark(this)" checked>
+                    <input id="<%=result_res[i]._id%>" class="card-header" type="checkbox" data-toggle="toggle" onchange="bookmark(this)" checked>
+                    <span class="card-text">Bookmark</span>
+                  
                 <% } else {%>
-                  <input id="<%=result_res[i]._id%>" class="card-header" type="checkbox" data-toggle="toggle" onchange="bookmark(this)">
+                    <input id="<%=result_res[i]._id%>" class="card-header" type="checkbox" data-toggle="toggle" onchange="bookmark(this)">
+                    <span class="card-text">Bookmark</span>
                   <% } %>
                 <% } %>
               <div class="card-body">

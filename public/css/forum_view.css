@@ -58,6 +58,17 @@ footer {
     margin-top: 5%;
 }
 
+.reply {
+    margin-bottom: 4%;
+    background-color: whitesmoke;
+    padding: 4% 5%;
+    text-align: start;
+    border-radius: 8px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .reply-form {
     width: 80%;
     text-align: start;

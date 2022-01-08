@@ -316,5 +316,15 @@ footer {
 }
 
 #livesearch {
-    background-color: blanchedalmond;
+    background-color: whitesmoke;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 3rem;
 }

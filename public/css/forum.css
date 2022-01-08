@@ -47,7 +47,9 @@ footer {
 }
 
 @media (max-width:992px){
-
+    .col, .topics{
+        display: none;
+    }
 }
 
 .container{
@@ -86,6 +88,8 @@ footer {
     margin-right: 5.5%;
     margin-top: 2.2%;
 }
+
+
 
 .add-button {
     position: fixed;
@@ -136,6 +140,6 @@ footer {
     display: none;
 }
 
-#livesearch {
-    background-color: blanchedalmond;
+#livesearch:hover {
+    background-color: ghostwhite;
 }
