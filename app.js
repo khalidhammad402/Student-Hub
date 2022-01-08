@@ -331,7 +331,6 @@ app.post("/helpdesk", sessionChecker, function(req, res){
         if(err){
             console.log(err)
         } else {
-            console.log("message sent")
             res.redirect("/helpdesk")
         }
     })
