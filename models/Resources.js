@@ -1,3 +1,4 @@
+//Resources schema used for resources page
 const mongoose = require("mongoose");
 
 mongoose.connect("mongodb+srv://allstudentsHub:allstudentsHub@cluster0.14bcs.mongodb.net/studentHub", {

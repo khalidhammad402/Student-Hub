@@ -76,7 +76,11 @@
                 <h6>
                     topic: <%= result[i].topic %>
                 </h6>
-                <p>
+                <p style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 60ch;">
                     <%= result[i].content %>
                 </p>
                 <a href="/user/<%=result[i].author%>">

@@ -1,4 +1,6 @@
+//User schema used for saving user data
 const mongoose = require("mongoose");
+//Using bcrypt to encrypt user password making the website more safe for user
 const bcrypt = require("bcrypt");
 
 mongoose.connect("mongodb+srv://allstudentsHub:allstudentsHub@cluster0.14bcs.mongodb.net/studentHub", {

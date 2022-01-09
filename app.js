@@ -1,3 +1,4 @@
+// Requiring all dependencies
 const express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
@@ -10,13 +11,13 @@ const multer = require("multer")
 const nodemailer = require('nodemailer');
 const mailGun = require("nodemailer-mailgun-transport")
 
+// Setting up nodemailer to send mail and nodemailer-gun to receive emails
 const auth = {
     auth: {
         api_key: '2fad5ebbca13ec3f1539f8ce1f071828-0be3b63b-776f1e86',
         domain: 'sandbox66606511a5a242e9b73cae81bd85fd99.mailgun.org'
     }
 }
-
 const transporter = nodemailer.createTransport({
   service: 'hotmail',
   auth: {
@@ -24,9 +25,9 @@ const transporter = nodemailer.createTransport({
     pass: 'btech/10xxx/20'
   }
 });
-
 const send_transporter = nodemailer.createTransport(mailGun(auth))
 
+// Setting up multer for uploading images as profile picture
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/uploads')
@@ -35,7 +36,6 @@ const storage = multer.diskStorage({
       cb(null, file.originalname)
     }
 })
- 
 const upload = multer({ 
     storage:storage,
     limits:{
@@ -43,14 +43,17 @@ const upload = multer({
     },
 });
 
+// Importing mongodb schemas used in the website
 const User = require("./models/User");
 const Forum = require("./models/Forum");
 const Resources = require("./models/Resources");
 const Experience = require("./models/Experience");
 
+// Setting up some varibale to be used in server
 let isSignedIn = false;
 let ver_num = 123456;
 
+// Setting up express and ejs
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
@@ -66,16 +69,15 @@ app.use(session({
     }
 }));
 app.use(express.static(__dirname + '/public'));
-
 app.set('view engine', 'ejs');
 
+// Some functions used in backend for checking login session
 app.use(function(req, res, next) {
     if (req.session.user && req.session.StudentHub) {
         res.render("home", {bool:isSignedIn})
     }
     next()
 })
-
 var sessionChecker = function(req, res, next) {
     if (req.session.user && req.session.StudentHub) {
         res.render("home", {bool:isSignedIn})
@@ -84,11 +86,13 @@ var sessionChecker = function(req, res, next) {
     }
 }
 
+//Home route
 app.route("/")
 .get(sessionChecker, function(req, res) {
     res.render("home", {bool:isSignedIn});
 });
 
+//Signup Route
 app.route("/signup")
 .get(sessionChecker, function(req, res) {
     res.render("signup");
@@ -107,8 +111,8 @@ app.route("/signup")
             res.redirect("signup");
             console.log(err);
         } else {
-            console.log(docs);
             req.session.user = docs;
+            // Generating random 6 digit number to be sent to user for email authentication
             ver_num = Math.floor(100000 + Math.random() * 900000)
             User.find({username: req.body.username}, function(err, result){
                 if(!err){
@@ -134,12 +138,12 @@ app.route("/signup")
     })
 });
 
+//Verification route
 app.get("/verification", sessionChecker, function(req, res){
     res.render("verification")
 })
 app.post("/verification", sessionChecker, function(req, res){
     if(ver_num == req.body.code){
-        console.log("code verified")
         User.findOneAndUpdate({username: req.session.user.username}, {$set: {verified: true}}, function(err, result){
             if(!err){
                 res.redirect("/signin")
@@ -153,6 +157,7 @@ app.post("/verification", sessionChecker, function(req, res){
     }
 })
 
+//Signin route
 app.route("/signin")
 .get(sessionChecker, function(req, res) {
     isSignedIn = false;
@@ -183,6 +188,7 @@ app.route("/signin")
     }
 });
 
+//Forum route
 app.route("/forum")
 .get(sessionChecker, function(req, res) {
     if(isSignedIn) {
@@ -198,6 +204,7 @@ app.route("/forum")
     }
 });
 app.post("/forum", sessionChecker, function(req, res){
+    //usings ajax for live searching in forum page
     let hint = '';
     let response = '';
     let searchQ = req.body.query.toLowerCase();
@@ -228,6 +235,7 @@ app.post("/forum", sessionChecker, function(req, res){
     }
 });
 
+//Forum add route, used for adding content to forum
 app.route("/forum/add")
 .get(sessionChecker, function(req, res){
     if (isSignedIn){
@@ -262,10 +270,12 @@ app.route("/forum/add")
     }
 })
 
+//About us route
 app.get("/aboutus", sessionChecker, function(req, res) {
     res.render("aboutus", {bool: isSignedIn})
 })
 
+//Personal user profile route 
 app.get("/profile", sessionChecker, function(req, res){
     if(isSignedIn){
         Resources.find({author: req.session.user.username}, function(err, result_res){
@@ -292,6 +302,8 @@ app.get("/profile", sessionChecker, function(req, res){
         res.redirect("/signin")
     }
 })
+
+//Profile edit route used for editing user profile
 app.get("/profile/edit", sessionChecker, function(req, res){
     if(isSignedIn){
         res.render("profile_edit", {bool: isSignedIn})
@@ -317,6 +329,7 @@ app.post("/profile/edit", upload.single('image'), function(req, res){
     })
 })
 
+//helpdesk route
 app.get("/helpdesk", sessionChecker, function(req, res) {
     res.render("helpdesk", {bool: isSignedIn})
 })
@@ -327,6 +340,7 @@ app.post("/helpdesk", sessionChecker, function(req, res){
         subject: 'User query: Helpdesk',
         text: req.body.name+': '+req.body.description
     };
+    // Sending mail to Student-Hub official email by user
     send_transporter.sendMail(mailOptions, function(err, data){
         if(err){
             console.log(err)
@@ -336,9 +350,11 @@ app.post("/helpdesk", sessionChecker, function(req, res){
     })
 })
 
+//Resources route
 app.get("/resources", function(req, res) {
     Resources.find(function(err, result_res){
         if (!err){
+            //Sorting Resources collection according to views
             Resources.find(function(err, result){
                 if (!err){
                     if(isSignedIn){
@@ -380,6 +396,8 @@ app.post("/resources", sessionChecker, function(req, res){
         })
     }
 });
+
+// Resource search route, used by ajax for searching inside resources page
 app.post("/resources/search", sessionChecker, function(req, res){
     console.log(req.body)
     let hint = '';
@@ -392,6 +410,7 @@ app.post("/resources/search", sessionChecker, function(req, res){
                 results.forEach(function(result) {
                     if(result.title.toLowerCase().indexOf(searchQ) == 0){
                         if(hint === ""){
+                            //Returning HTML content as a result
                             hint = "<a href='/resources/"+ result._id +"'>"+ result.title +"</a>"
                         } else {
                             hint = hint + "<br><a href='/resources/"+ result._id +"'>"+ result.title +"</a>"
@@ -411,6 +430,8 @@ app.post("/resources/search", sessionChecker, function(req, res){
         })
     }
 });
+
+//Resources write route used for adding content to resources page
 app.get("/resources/write", sessionChecker, function(req, res){
     if(isSignedIn){
         res.render("resources_write", {bool: isSignedIn});
@@ -465,6 +486,7 @@ app.post("/resources/write", sessionChecker, function(req, res){
     }
 })
 
+//Internship page route
 app.get("/internship", sessionChecker, function(req, res) {
     Experience.find(function(err, result){
         if (!err){
@@ -475,10 +497,10 @@ app.get("/internship", sessionChecker, function(req, res) {
     });
 });
 app.post("/internship", sessionChecker, function(req, res){
+    //Ajax is used for live searchng in internship page
     let hint = '';
     let response = '';
     let searchQ = req.body.query.toLowerCase();
-    console.log(searchQ)
     if(searchQ.length > 0){
         Experience.find({}, function(err, results) {
             if(!err){
@@ -505,6 +527,7 @@ app.post("/internship", sessionChecker, function(req, res){
     }
 });
 
+// Internship write page used for adding content to internship page
 app.get("/internship/write", sessionChecker, function(req, res){
     if(isSignedIn){
         res.render("internship_write", {bool: isSignedIn});
@@ -513,6 +536,7 @@ app.get("/internship/write", sessionChecker, function(req, res){
     }
 })
 app.post("/internship/write", sessionChecker, function(req, res){
+    //Getting live date
     let today = new Date();
     let options = {
         day: "numeric",
@@ -554,6 +578,7 @@ app.post("/internship/write", sessionChecker, function(req, res){
     }
 })
 
+//Dynamic forum route used for opening a particular content inside forum page
 app.get("/forum/:id", function(req, res){
     if(isSignedIn){
         Forum.findOne({_id: req.params.id}, function(err, result){
@@ -586,6 +611,8 @@ app.post("/forum/:id", function(req, res){
         res.redirect("/signin")
     }
 })
+
+//Dynamic forum topic route used for searching forum content based on a particular topic
 app.get("/forum/topics/:topic", function(req, res){
     if(isSignedIn){
         Forum.find({topic: req.params.topic}, function(err, result){
@@ -601,6 +628,7 @@ app.get("/forum/topics/:topic", function(req, res){
     }
 })
 
+//Dynamic resources route used for opening a particular content inside resources page
 app.get("/resources/:id", function(req, res){    
     Resources.findOneAndUpdate({_id: req.params.id}, {$inc: {views: 1}}, {new: true}, function(err, response){
         if (err){
@@ -618,6 +646,7 @@ app.get("/resources/:id", function(req, res){
     });
 })
 
+//Dynamic internship route used for opening a particular content inside internship page
 app.get("/internship/:id", function(req, res){       
     Experience.findOne({_id: req.params.id}, function(err, result){
         if (!err){
@@ -629,6 +658,7 @@ app.get("/internship/:id", function(req, res){
     });
 })
 
+//Dynamic user route used for viewing another users profile page
 app.get("/user/:user", function(req, res){       
     User.findOne({username: req.params.user}, function(err, result){
         if (!err){
@@ -638,7 +668,8 @@ app.get("/user/:user", function(req, res){
         }
     });
 })
-  
+
+// setting up port for heroku as well as local
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;

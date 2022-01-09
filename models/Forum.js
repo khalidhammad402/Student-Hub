@@ -1,3 +1,4 @@
+//Forum schema used for Forurm page
 const mongoose = require("mongoose");
 
 mongoose.connect("mongodb+srv://allstudentsHub:allstudentsHub@cluster0.14bcs.mongodb.net/studentHub", {
